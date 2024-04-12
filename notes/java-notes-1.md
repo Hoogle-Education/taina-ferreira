@@ -90,6 +90,69 @@ public class Pessoa {
     this.phoneNumber = phoneNumber;
   }
 
+}
+```
+
+## Modificadores de acesso
+
+`(default)` : é quando não temos nenhum modificador e fica visível apenas dentro do mesmo pacote
+`public`: a coisa é visível em todo o projeto
+`private` : deixa visivel apenas dentro da classe
+
+## getters and setters
+
+Getters e setters nos ajudam a expor atributos e separar as funcionalidades de acesso e modificação.
+
+> quando fazemos uma classe apenas com getters e setters criamos uma classe anemica ou POJO(Plain Old Java Objects)
+
+```java
+public class Account {
+  private String holder;
+  private double balance;
+
+  // constructors...
+
+
+  public double getBalance() {
+    return balance;
+  }
+
+  public double setBalance(double balance) {
+    this.balance = balance;
+  }
 
 }
+```
+
+## Encapsulamento
+
+manter as logicas da classe dentro da classe.
+
+> O contrario do encapsulamento é o acoplamento
+
+```java
+public class Account {
+  private String holder;
+  private double balance;
+
+  // constructors...
+
+
+  public double getBalance() {
+    return balance;
+  }
+
+  public void deposit(double amount) {
+    balance += amount;
+  }
+
+  public void withdraw(double amount) {
+    if(balance < amount) 
+      return;
+
+    balance -= amount;
+  }
+
+}
+
 ```
