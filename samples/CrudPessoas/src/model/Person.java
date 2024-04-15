@@ -48,4 +48,15 @@ public class Person {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Person{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", age=").append(age);
+        sb.append(", height=").append(height);
+        sb.append(", phoneNumber='").append(phoneNumber).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
