@@ -50,6 +50,102 @@ public class Main {
         }
     }
 
+    public static void updateAllByName(Person[] people, int emptyPos, Scanner scanner) {
+        System.out.print("Busque por um nome para atualizar seus campos: ");
+        String nameToSearch = scanner.nextLine();
+        Person personToUpdate = null;
+
+        for(int i = 0; i < emptyPos; i++) {
+            Person person = people[i];
+            String personNameIngoreCase = person.getName().toUpperCase();
+
+            if(personNameIngoreCase.contains(nameToSearch.toUpperCase())) {
+                personToUpdate = person;
+                break;
+            }
+        }
+
+        if(personToUpdate == null) {
+            System.out.println("Nenhuma pessoa para atualizar encontrada com esse nome");
+            return;
+        }
+
+        System.out.println("Pessoa encontrada: " + personToUpdate);
+        System.out.print("Confirma que deseja atualizar os campos dessa pessoa? (s/n): ");
+
+        String yesOrNoOption = scanner.nextLine();
+
+        if (yesOrNoOption.equalsIgnoreCase("n")) {
+            System.out.println("Atualizacao cancelada.");
+            return;
+        }
+
+        if(!yesOrNoOption.equalsIgnoreCase("s")) {
+            System.out.println("Opcao invalida");
+            System.out.println("Atualizacao cancelada.");
+            return;
+        }
+
+        System.out.print("Digite o novo nome: ");
+        personToUpdate.setName(scanner.nextLine());
+
+        System.out.print("Digite a sua nova idade: ");
+        personToUpdate.setAge(scanner.nextInt());
+        scanner.nextLine();
+
+        System.out.print("Digite a sua nova altura: ");
+        personToUpdate.setHeight(scanner.nextDouble());
+        scanner.nextLine();
+
+        System.out.print("Digite o seu novo telefone: ");
+        personToUpdate.setPhoneNumber(scanner.nextLine());
+    }
+
+    public static boolean deleteByName(Person[] people, int emptyPos, Scanner scanner) {
+        System.out.print("Busque por um nome para deletar: ");
+        String nameToDelete = scanner.nextLine();
+        int personToRemoveIndex = -1;
+
+        for(int i = 0; i < emptyPos; i++) {
+            Person person = people[i];
+            String personNameIngoreCase = person.getName().toUpperCase();
+
+            if(personNameIngoreCase.contains(nameToDelete.toUpperCase())) {
+                personToRemoveIndex = i;
+                break;
+            }
+        }
+
+        if(personToRemoveIndex == -1) {
+            System.out.println("Nenhuma pessoa para deletar encontrada com esse nome");
+            return false;
+        }
+
+        System.out.println("Pessoa encontrada: " + people[personToRemoveIndex]);
+        System.out.print("Confirma que deseja deletar essa pessoa? (s/n): ");
+
+        String yesOrNoOption = scanner.nextLine();
+
+        if (yesOrNoOption.equalsIgnoreCase("n")) {
+            System.out.println("Atualizacao cancelada.");
+            return false;
+        }
+
+        if(!yesOrNoOption.equalsIgnoreCase("s")) {
+            System.out.println("Opcao invalida");
+            System.out.println("Atualizacao cancelada.");
+            return false;
+        }
+
+        people[personToRemoveIndex] = null;
+
+        for(int i = personToRemoveIndex + 1; i < emptyPos; i++) {
+            people[i] = people[i+1];
+        }
+
+        return true;
+    }
+
     public static void showMenu() {
         System.out.println("1 - para listar todos");
         System.out.println("2 - para buscar por nome");
@@ -83,6 +179,11 @@ public class Main {
                 case 3 -> {
                     addPerson(people, emptyPos, scanner);
                     emptyPos++;
+                }
+                case 4 -> updateAllByName(people, emptyPos, scanner);
+                case 5 -> {
+                    boolean isDeleted = deleteByName(people, emptyPos, scanner);
+                    if(isDeleted) emptyPos--;
                 }
             }
         } while(option != 0);
